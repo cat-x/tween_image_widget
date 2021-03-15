@@ -1,8 +1,8 @@
 name: tween_image_widget
 description: A tween image widget Flutter package.
 version: 0.0.1
-author:Cat-x
-homepage:https://github.com/cat-x/tween_image_widget
+author: Cat-x <a599231042@163.com>
+homepage: https://github.com/cat-x/tween_image_widget
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
