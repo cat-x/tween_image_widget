@@ -1,3 +1,4 @@
+Language: [English](README.md) | [中文简体](README-ZH.md)
 # tween_image_widget
 
 A tween image widget Flutter package.
@@ -8,10 +9,43 @@ A tween image widget Flutter package.
 
 ```yaml
 dependencies:
-  tween_image_widget: ^0.0.1 #please use the latest version on pub
+  tween_image_widget: ^0.0.2 #please use the latest version on pub
 ```
  
 ### Use Widget
+1. Use repeat animation
+ Only need to pass in the image’s path and index, and the specific durationMilliseconds.
+```dart
+         TweenImageWidget(
+              ImagesEntry(1, 8, "assets/img/addpage_icon_load%s.png"),
+              durationMilliseconds: 500,
+            ),
+```
+
+2. Use control animation
+Need to assign repeat to false, define TweenImageWidget, and then use reverse(), forward(), stop() and other functions according to the scene
+```dart
+  @override
+  void initState() {
+    _curtainAnimationImage = TweenImageWidget(
+      ImagesEntry(1, 20, "equipmentcontrol_pic_curtain%s".toAssetImg()),
+      durationMilliseconds: 5000,
+      repeat: false,
+    );
+    super.initState();
+  }
+```
+
+3. Other used parameters (initial value, width, height)
+```dart
+///initial value:calculated by percentage
+startsValue: curtainPosition / 100,
+///Height and width are optional. Once assigned, the image will be scaled according to the value you specify
+height: 50,
+width: 50,
+```
+
+**Functions:**
 ```dart
   ///[repeat]'s default value is true, if need manually control the animation, please pass in false
   ///

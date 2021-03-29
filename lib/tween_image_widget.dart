@@ -41,17 +41,20 @@ class TweenImageWidget extends StatefulWidget {
   ///Stops running this animation.
   ///
   ///Reference on [AnimationController.stop]
-  void stop({bool canceled = true}) => _animationController?.stop(canceled: canceled);
+  void stop({bool canceled = true}) =>
+      _animationController?.stop(canceled: canceled);
 
   ///Starts running this animation forwards (towards the end).
   ///
   ///Reference on [AnimationController.forward]
-  TickerFuture? forward({double? from}) => _animationController?.forward(from: from);
+  TickerFuture? forward({double? from}) =>
+      _animationController?.forward(from: from);
 
   ///Starts running this animation in reverse (towards the beginning).
   ///
   ///Reference on [AnimationController.reverse]
-  TickerFuture? reverse({double? from}) => _animationController?.reverse(from: from);
+  TickerFuture? reverse({double? from}) =>
+      _animationController?.reverse(from: from);
 
   ///Drives the animation from its current value to target.
   ///
@@ -77,21 +80,27 @@ class TweenImageWidget extends StatefulWidget {
     this.repeat = true,
     this.startsValue,
     key,
-  })  : assert((width == null || width > 0), "width is should be null or > 0.0"),
-        assert((height == null || height > 0), "height is should be null or > 0.0"),
-        assert((startsValue == null || (startsValue >= 0 && startsValue <= 1)), "startsValue is should be null or >= 0.0 && <= 1.0"),
+  })  : assert(
+            (width == null || width > 0), "width is should be null or > 0.0"),
+        assert((height == null || height > 0),
+            "height is should be null or > 0.0"),
+        assert((startsValue == null || (startsValue >= 0 && startsValue <= 1)),
+            "startsValue is should be null or >= 0.0 && <= 1.0"),
         super(key: key);
 
   @override
-  _TweenImageWidgetState createState() => _TweenImageWidgetState((animationController) {
+  _TweenImageWidgetState createState() =>
+      _TweenImageWidgetState((animationController) {
         _animationController = animationController;
       });
 }
 
-class _TweenImageWidgetState extends State<TweenImageWidget> with TickerProviderStateMixin {
+class _TweenImageWidgetState extends State<TweenImageWidget>
+    with TickerProviderStateMixin {
   AnimationController? _controller;
   late Animation<int> _animation;
-  void Function(AnimationController? animationController) setAnimationController;
+  void Function(AnimationController? animationController)
+      setAnimationController;
 
   _TweenImageWidgetState(this.setAnimationController);
 
@@ -99,14 +108,21 @@ class _TweenImageWidgetState extends State<TweenImageWidget> with TickerProvider
   void initState() {
     super.initState();
 
-    _controller = new AnimationController(vsync: this, duration: Duration(milliseconds: widget.durationMilliseconds));
-    if (widget.repeat) {
-      _controller!.repeat();
-    }
+    _controller = new AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: widget.durationMilliseconds));
+
     if (widget.startsValue != null) {
       _controller!.value = widget.startsValue!;
     }
-    _animation = new IntTween(begin: widget.entry.lowIndex, end: widget.entry.highIndex).animate(_controller!);
+
+    if (widget.repeat) {
+      _controller!.repeat();
+    }
+
+    _animation =
+        new IntTween(begin: widget.entry.lowIndex, end: widget.entry.highIndex)
+            .animate(_controller!);
 
     setAnimationController(_controller);
   }
@@ -118,10 +134,14 @@ class _TweenImageWidgetState extends State<TweenImageWidget> with TickerProvider
       builder: (BuildContext context, Widget? child) {
         int frame = _animation.value;
         return new Image.asset(
-          (widget.entry.makePath ?? widget.entry._defaultMakePath()).call(frame), //根据传进来的参数拼接路径
-          gaplessPlayback: true, //避免图片闪烁
+          (widget.entry.makePath ?? widget.entry._defaultMakePath()).call(
+              frame), //根据传进来的参数拼接路径 Splice the path according to the parameters passed in
+          gaplessPlayback: true, //避免图片闪烁 avoid flickering pictures
           width: widget.width,
           height: widget.height,
+          fit: (widget.width != null || widget.height != null)
+              ? BoxFit.fill
+              : null,
         );
       },
     );
@@ -148,7 +168,8 @@ class ImagesEntry {
   String Function(int index)? makePath;
 
   ///Default file path constructor
-  String Function(int index) _defaultMakePath() => (index) => basePath.replaceAll("%s", index.toString());
+  String Function(int index) _defaultMakePath() =>
+      (index) => basePath.replaceAll("%s", index.toString());
 
   ///[lowIndex] is the first index of the animation sequence pictures
   ///
