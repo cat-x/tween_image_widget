@@ -129,7 +129,7 @@ width: 50,
 ```
 
 #### Demo Pictrue
-![demo](./demo.gif)
+![demo](demo.gif)
 
 
 

@@ -129,7 +129,7 @@ width: 50,
 ```
 
 #### Demo 截图
-![demo](./demo.gif)
+![demo](demo.gif)
 
 
 
